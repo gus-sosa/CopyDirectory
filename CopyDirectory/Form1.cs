@@ -8,6 +8,7 @@ using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using CopyDirectory.Core;
@@ -20,20 +21,13 @@ namespace CopyDirectory
         {
             InitializeComponent();
             DirectoryHandler = new DirectoryHandler();
-            DirectoryHandler.NewFileCopied += s =>
-            {
-                listBox.Items.Add(s);
-                listBox.Refresh();
-            };
+            DirectoryHandler.NewFileCopied += AddFilePathIntoListBox;
         }
 
         private void AddFilePathIntoListBox(string filePath)
         {
-            Invoke((MethodInvoker)(() =>
-            {
-                listBox.Items.Add(filePath);
-                listBox.Refresh();
-            }));
+            listBox.Items.Add(filePath);
+            listBox.Refresh();
         }
 
         public DirectoryHandler DirectoryHandler { get; set; }

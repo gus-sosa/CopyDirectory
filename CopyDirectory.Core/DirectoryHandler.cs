@@ -11,7 +11,7 @@ namespace CopyDirectory.Core
 {
     public class DirectoryHandler
     {
-        public Action<string> NewFileCopied;
+        public event Action<string> NewFileCopied;
 
         public enum OperationResult
         {
