@@ -20,7 +20,11 @@ namespace CopyDirectory
         {
             InitializeComponent();
             DirectoryHandler = new DirectoryHandler();
-            DirectoryHandler.NewFileCopied += AddFilePathIntoListBox;
+            DirectoryHandler.NewFileCopied += s =>
+            {
+                listBox.Items.Add(s);
+                listBox.Refresh();
+            };
         }
 
         private void AddFilePathIntoListBox(string filePath)
@@ -51,6 +55,7 @@ namespace CopyDirectory
             listBox?.Items.Clear();
             Task.Run(() =>
             {
+                copyButton.Enabled = false;
                 DirectoryHandler.OperationResult handler =
                     DirectoryHandler.CopyDirectory(sourceDirectoryLabel.Text, targetDirectoryLabel.Text);
                 switch (handler)
@@ -73,6 +78,7 @@ namespace CopyDirectory
                     default:
                         throw new ArgumentOutOfRangeException();
                 }
+                copyButton.Enabled = true;
             });
         }
     }
