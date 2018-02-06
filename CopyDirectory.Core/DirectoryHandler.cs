@@ -1,11 +1,13 @@
 ﻿using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.IO;
 using System.Runtime.CompilerServices;
+using System.Threading;
 
 namespace CopyDirectory.Core
 {
@@ -24,6 +26,7 @@ namespace CopyDirectory.Core
 
         public OperationResult CopyDirectory(string source, string target)
         {
+            Debugger.Log(1, "locura", $"copier id {Thread.CurrentThread.ManagedThreadId}");
             if (!Directory.Exists(source))
                 return OperationResult.SourceFolderDoesNotExist;
             if (!Directory.Exists(target))
